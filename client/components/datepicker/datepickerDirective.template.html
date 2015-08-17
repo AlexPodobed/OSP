@@ -1,0 +1,19 @@
+<div class="dp-wrapper">
+  <input type="text" class="form-control"
+         datepicker-popup
+         ng-model="dpModel"
+         is-open="status.opened"
+         datepicker-popup="{{format}}"
+         min-date="startDate"
+         max-date="'2020-06-22'"
+         datepicker-options="dateOptions"
+         date-disabled="disabled(date, mode)"
+         ng-required="true"
+         close-text="Close" />
+
+  <button type="button" class="btn btn-default"
+          ng-click="open($event)">
+    <i class="glyphicon glyphicon-calendar"></i>
+  </button>
+{{dpModel}}
+</div>

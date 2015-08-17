@@ -4,7 +4,7 @@ angular.module('ospApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('main', {
-        url: '/',
+        url: '/home',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });

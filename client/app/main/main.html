@@ -1,28 +1,97 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
-
-<header class="hero-unit" id="banner">
+<div class="hero-unit" id="banner">
   <div class="container">
-    <h1>'Allo, 'Allo!</h1>
+    <h1>Task manager</h1>
     <p class="lead">Kick-start your next web app with Angular Fullstack</p>
     <img src="assets/images/yeoman.png" alt="I'm Yeoman">
   </div>
-</header>
+</div>
+<br>
 
 <div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}</a></li>
-      </ul>
+  <task-creator></task-creator>
+  <osp-datepicker></osp-datepicker>
+  <form ng-submit="addNewTask()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="">Task:</label>
+          <input type="text" class="form-control" ng-model="newTask.summary">
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="">Priority:</label>
+          <select name="" id="" class="form-control" ng-model="newTask.priority">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-3 end-date-datepicker">
+        <div class="form-group">
+          <label for="">End Date:</label>
+          <input type="text" class="form-control"
+                 datepicker-popup
+                 ng-model="newTask.endDate"
+                 is-open="status.opened"
+                 datepicker-popup="{{format}}"
+                 min-date="endDate"
+                 max-date="'2020-06-22'"
+                 datepicker-options="dateOptions"
+                 date-disabled="disabled(date, mode)"
+                 ng-required="true"
+                 close-text="Close" />
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default"
+                    ng-click="open($event)">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+        </span>
+        </div>
+      </div>
+
+      <div class="col-md-1">
+        <label for="">Btn:</label>
+        <button type="submit" class="btn btn-default" >
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </div>
+
     </div>
-  </div>
+  </form>
+
 </div>
 
-<footer class="footer">
-  <div class="container">
-      <p>Angular Fullstack v2.1.1 |
-        <a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
-         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
-  </div>
-</footer>
+<div class="container">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Task</th>
+      <th>Priority</th>
+      <th>End Date</th>
+      <th>#</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="task in tasks">
+      <td>{{task.summary}}</td>
+      <td>{{task.priority}}</td>
+      <td>{{task.endDate | date: 'dd-MMMM-yyyy'}}</td>
+      <td><input type="checkbox" ng-checked="task.completed"></td>
+    </tr>
+
+    </tbody>
+  </table>
+</div>
+
+
+<code>
+  <pre>
+    {{newTask}}
+  </pre>
+  <pre>{{tasks}}</pre>
+</code>
+

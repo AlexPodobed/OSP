@@ -1,10 +1,8 @@
-'use strict';
-
 angular.module('ospApp')
   .controller('NavbarCtrl', function ($scope, $location) {
     $scope.menu = [{
       'title': 'Home',
-      'link': '/'
+      'link': '/home'
     }];
 
     $scope.isCollapsed = true;
@@ -12,4 +10,10 @@ angular.module('ospApp')
     $scope.isActive = function(route) {
       return route === $location.path();
     };
+  })
+  .directive('ospHeader', function(){
+    return {
+      templateUrl: "components/header/header.template.html",
+      controller: "NavbarCtrl"
+    }
   });
