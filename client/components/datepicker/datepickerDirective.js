@@ -1,4 +1,14 @@
 angular.module('ospApp')
+  .directive('datepickerPopup', function (){
+    return {
+      restrict: 'EAC',
+      require: 'ngModel',
+      link: function(scope, element, attr, controller) {
+        //remove the default formatter from the input directive to prevent conflict
+        controller.$formatters.shift();
+      }
+    }
+  })
   .directive("ospDatepicker", function(datepickerPopupConfig, $timeout, $filter){
 
 
@@ -6,7 +16,7 @@ angular.module('ospApp')
       restrict: "EA",
       templateUrl: "components/datepicker/datepickerDirective.template.html",
       scope: {
-
+        endDate: "="
       },
       controller: function ($scope) {
         var startDate = $filter('date')((new Date(new Date().getTime() + 24*60*60*1000)),"dd-MMMM-yyyy" );
@@ -16,8 +26,6 @@ angular.module('ospApp')
         $scope.status = {
           opened: false
         };
-
-        $scope.dpModel = startDate;
 
         $scope.disabled = function(date, mode) {
           return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );

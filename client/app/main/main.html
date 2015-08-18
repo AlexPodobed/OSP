@@ -9,7 +9,9 @@
 
 <div class="container">
   <task-creator></task-creator>
-  <osp-datepicker></osp-datepicker>
+
+
+
   <form ng-submit="addNewTask()">
     <div class="row">
       <div class="col-md-6">
@@ -33,23 +35,7 @@
       <div class="col-md-3 end-date-datepicker">
         <div class="form-group">
           <label for="">End Date:</label>
-          <input type="text" class="form-control"
-                 datepicker-popup
-                 ng-model="newTask.endDate"
-                 is-open="status.opened"
-                 datepicker-popup="{{format}}"
-                 min-date="endDate"
-                 max-date="'2020-06-22'"
-                 datepicker-options="dateOptions"
-                 date-disabled="disabled(date, mode)"
-                 ng-required="true"
-                 close-text="Close" />
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-default"
-                    ng-click="open($event)">
-              <i class="glyphicon glyphicon-calendar"></i>
-            </button>
-        </span>
+          <osp-datepicker end-date="newTask.endDate"></osp-datepicker>
         </div>
       </div>
 
@@ -65,33 +51,43 @@
 
 </div>
 
+
+
+
 <div class="container">
-  <table class="table table-bordered">
-    <thead>
-    <tr>
-      <th>Task</th>
-      <th>Priority</th>
-      <th>End Date</th>
-      <th>#</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="task in tasks">
-      <td>{{task.summary}}</td>
-      <td>{{task.priority}}</td>
-      <td>{{task.endDate | date: 'dd-MMMM-yyyy'}}</td>
-      <td><input type="checkbox" ng-checked="task.completed"></td>
-    </tr>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="btn-group">
+        <label class="btn btn-primary" ng-model="filterBy.active" btn-checkbox>Active</label>
+        <label class="btn btn-primary" ng-model="filterBy.completed" btn-checkbox>Completed</label>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>Task</th>
+          <th>Priority</th>
+          <th>End Date</th>
+          <th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="task in tasks | filter:{completed: !filterBy.active} | filter:{completed: filterBy.completed} ">
+          <td>{{task.summary}}</td>
+          <td>{{task.priority}}</td>
+          <td>{{task.endDate | date: 'dd-MMMM-yyyy'}}</td>
+          <td><input type="checkbox" ng-checked="task.completed"></td>
+        </tr>
 
-    </tbody>
-  </table>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
 </div>
-
-
-<code>
-  <pre>
-    {{newTask}}
-  </pre>
-  <pre>{{tasks}}</pre>
-</code>
-

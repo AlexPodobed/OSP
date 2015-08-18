@@ -1,7 +1,7 @@
 <div class="dp-wrapper">
   <input type="text" class="form-control"
          datepicker-popup
-         ng-model="dpModel"
+         ng-model="endDate"
          is-open="status.opened"
          datepicker-popup="{{format}}"
          min-date="startDate"
@@ -15,5 +15,5 @@
           ng-click="open($event)">
     <i class="glyphicon glyphicon-calendar"></i>
   </button>
-{{dpModel}}
+  <br>
 </div>
