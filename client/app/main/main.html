@@ -9,85 +9,8 @@
 
 <div class="container">
   <task-creator></task-creator>
-
-
-
-  <form ng-submit="addNewTask()">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="">Task:</label>
-          <input type="text" class="form-control" ng-model="newTask.summary">
-        </div>
-      </div>
-
-      <div class="col-md-2">
-        <div class="form-group">
-          <label for="">Priority:</label>
-          <select name="" id="" class="form-control" ng-model="newTask.priority">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="col-md-3 end-date-datepicker">
-        <div class="form-group">
-          <label for="">End Date:</label>
-          <osp-datepicker end-date="newTask.endDate"></osp-datepicker>
-        </div>
-      </div>
-
-      <div class="col-md-1">
-        <label for="">Btn:</label>
-        <button type="submit" class="btn btn-default" >
-          <span class="glyphicon glyphicon-plus"></span>
-        </button>
-      </div>
-
-    </div>
-  </form>
-
 </div>
 
-
-
-
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="btn-group">
-        <label class="btn btn-primary" ng-model="filterBy.active" btn-checkbox>Active</label>
-        <label class="btn btn-primary" ng-model="filterBy.completed" btn-checkbox>Completed</label>
-      </div>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-bordered table-hover">
-        <thead>
-        <tr>
-          <th>Task</th>
-          <th>Priority</th>
-          <th>End Date</th>
-          <th>#</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="task in tasks | filter:{completed: !filterBy.active} | filter:{completed: filterBy.completed} ">
-          <td>{{task.summary}}</td>
-          <td>{{task.priority}}</td>
-          <td>{{task.endDate | date: 'dd-MMMM-yyyy'}}</td>
-          <td><input type="checkbox" ng-checked="task.completed"></td>
-        </tr>
-
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-
-
+  <task-list></task-list>
 </div>

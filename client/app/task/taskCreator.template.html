@@ -1,1 +1,36 @@
-<!--<h1>task creator</h1>-->
+<form ng-submit="addNewTask()">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="">Task:</label>
+        <input type="text" class="form-control" ng-model="newTask.summary">
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <label for="">Priority:</label>
+        <select name="" id="" class="form-control" ng-model="newTask.priority">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-3 end-date-datepicker">
+      <div class="form-group">
+        <label for="">End Date:</label>
+        <osp-datepicker end-date="newTask.endDate"></osp-datepicker>
+      </div>
+    </div>
+
+    <div class="col-md-1">
+      <label for="">Btn:</label>
+      <button type="submit" class="btn btn-default" >
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+    </div>
+
+  </div>
+</form>
