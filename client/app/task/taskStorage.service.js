@@ -37,12 +37,20 @@ angular.module('ospApp')
         $localStorage.tasks = {};
       }
     }
+    function formArray(obj){
+      var tempArr = [];
+      angular.forEach(obj, function (task, id) {
+        task.id = id;
+        tempArr.push(task)
+      });
+      return tempArr;
+    }
     init();
 
     Storage.tasks = $localStorage.tasks;
 
     Storage.getAll = function () {
-      return angular.copy(this.tasks, {});
+      return formArray(this.tasks)
     };
 
     Storage.getTask = function (id) {
@@ -54,7 +62,7 @@ angular.module('ospApp')
 
       if(!$localStorage.tasks[id]){
         $localStorage.tasks[id] = obj;
-        deferred.resolve(Storage.tasks);
+        deferred.resolve(formArray(Storage.tasks));
       }else {
         deferred.reject({error: "oops, already exist"});
       }
@@ -69,6 +77,7 @@ angular.module('ospApp')
         deferred.reject({error: "sorry, there is no task with this id" + id});
       } else {
         selectedTask.completed = !selectedTask.completed;
+        selectedTask.id = id;
         deferred.resolve(selectedTask);
       }
 

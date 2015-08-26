@@ -1,15 +1,15 @@
 angular.module('ospApp')
   .filter('taskFilter', function () {
     return function (tasks, filterBy) {
-      var filtered = {};
+      var filtered = [];
       if (filterBy.active && filterBy.completed) {
         filtered = tasks;
       } else {
-        angular.forEach(tasks, function (task, id) {
+        angular.forEach(tasks, function (task) {
           if (filterBy.active && !task.completed) {
-            filtered[id] = task;
+            filtered.push(task)
           } else if (filterBy.completed && task.completed) {
-            filtered[id] = task;
+            filtered.push(task)
           }
         });
       }
@@ -22,15 +22,22 @@ angular.module('ospApp')
 
       $scope.filterBy = {
         active: true,
-        completed: false
+        completed: true
+      };
+
+      $scope.predicate = "summary";
+
+      $scope.order = function (predicate) {
+        console.log(predicate);
+        $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+        $scope.predicate = predicate;
       };
 
       $scope.markAsDone = function (id) {
-        console.log("done", Task.get(id));
-
         Task.markAsComplete(id).
           then(function (task) {
-            $scope.tasks[id] = task
+            console.log(task);
+            //$scope.tasks[id] = task
           });
       };
 

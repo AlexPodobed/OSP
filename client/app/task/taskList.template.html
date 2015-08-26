@@ -7,24 +7,43 @@
   </div>
 </div>
 <br>
-<div class="row">
+<div class="row task-list-table">
   <div class="col-md-12">
     <table class="table table-bordered table-striped table-hover">
       <thead>
       <tr>
-        <th>Task</th>
-        <th>Priority</th>
-        <th>End Date</th>
-        <th>#</th>
+        <th ng-click="order('summary')">
+          Task
+          <div class="pull-right sort-controls" ng-class="{'active': predicate==='summary'}">
+            <i class="fa fa-caret-down" ng-show="reverse"></i>
+            <i class="fa fa-caret-up" ng-hide="reverse"></i>
+          </div>
+        </th>
+        <th ng-click="order('priority')">
+          Priority
+          <div class="pull-right sort-controls" ng-class="{'active': predicate==='priority'}">
+            <i class="fa fa-caret-down" ng-show="reverse"></i>
+            <i class="fa fa-caret-up" ng-hide="reverse"></i>
+          </div>
+        </th>
+        <th ng-click="order('endDate')">
+          End Date
+          <div class="pull-right sort-controls" ng-class="{'active': predicate==='endDate'}">
+            <i class="fa fa-caret-down" ng-show="reverse"></i>
+            <i class="fa fa-caret-up" ng-hide="reverse"></i>
+          </div>
+        </th>
+        <th>
+          #
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="(id, task) in tasks | taskFilter:filterBy ">
+      <tr ng-repeat="task in tasks | taskFilter:filterBy | orderBy:predicate:reverse">
         <td>{{task.summary}}</td>
         <td>{{task.priority}}</td>
         <td>{{task.endDate | date: 'dd-MMMM-yyyy'}}</td>
         <td>
-          <input type="checkbox" ng-checked="task.completed" ng-click="markAsDone(id)">
+          <input type="checkbox" ng-checked="task.completed" ng-click="markAsDone(task.id)">
         </td>
       </tr>
       </tbody>
