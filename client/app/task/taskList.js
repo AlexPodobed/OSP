@@ -16,7 +16,7 @@ angular.module('ospApp')
       return filtered;
     }
   })
-  .directive("taskList", function (Task) {
+  .directive("taskList", function (Task, Modal) {
     function taskListCtrl($scope) {
       $scope.tasks = Task.query();
 
@@ -28,7 +28,6 @@ angular.module('ospApp')
       $scope.predicate = "summary";
 
       $scope.order = function (predicate) {
-        console.log(predicate);
         $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
         $scope.predicate = predicate;
       };
@@ -41,10 +40,13 @@ angular.module('ospApp')
           });
       };
 
+      $scope.editTask = Modal.confirm.edit(function (task) {
+        $scope.$broadcast("task-edited")
+      });
+
       $scope.$on('task-added', function (e, tasks) {
         $scope.tasks = tasks;
       });
-
     }
 
     return {

@@ -15,6 +15,11 @@ angular.module('ospApp')
           cb();
         });
       },
+      update: function (id, obj) {
+        taskStorage.updateTask(id, obj).then(function (tasks) {
+          $rootScope.$broadcast("task-added", tasks);
+        });
+      },
       remove: function (id) {
         // remove task
         return "list of tasks"
@@ -60,8 +65,8 @@ angular.module('ospApp')
     Storage.addTask = function (id, obj) {
       var deferred = $q.defer();
 
-      if(!$localStorage.tasks[id]){
-        $localStorage.tasks[id] = obj;
+      if(!Storage.tasks[id]){
+        Storage.tasks[id] = obj;
         deferred.resolve(formArray(Storage.tasks));
       }else {
         deferred.reject({error: "oops, already exist"});
@@ -69,10 +74,23 @@ angular.module('ospApp')
 
       return deferred.promise;
     };
+    Storage.updateTask = function (id, obj) {
+      var deferred = $q.defer();
 
+      if(Storage.tasks[id]){
+        delete obj.id;
+        Storage.tasks[id] = obj;
+        deferred.resolve(formArray(Storage.tasks));
+      } else {
+        deferred.reject({error: "oops, can not fine"});
+      }
+
+
+      return deferred.promise;
+    };
     Storage.markAsCompletedTask = function (id) {
       var deferred = $q.defer();
-      var selectedTask = $localStorage.tasks[id];
+      var selectedTask = Storage.tasks[id];
       if(!selectedTask){
         deferred.reject({error: "sorry, there is no task with this id" + id});
       } else {

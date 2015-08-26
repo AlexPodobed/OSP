@@ -38,7 +38,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="task in tasks | taskFilter:filterBy | orderBy:predicate:reverse">
+      <tr ng-repeat="task in tasks | taskFilter:filterBy | orderBy:predicate:reverse" ng-dblclick="editTask(task)">
         <td>{{task.summary}}</td>
         <td>{{task.priority}}</td>
         <td>{{task.endDate | date: 'dd-MMMM-yyyy'}}</td>

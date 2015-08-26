@@ -1,7 +1,18 @@
 'use strict';
 
 angular.module('ospApp')
-  .factory('Modal', function ($rootScope, $modal) {
+  .directive("bindHtml", function () {
+    return {
+      restrict: "A",
+      scope: {
+        bindHtml: "="
+      },
+      link: function (scope, element, attr) {
+        element.append(scope.bindHtml)
+      }
+    }
+  })
+  .factory('Modal', function ($rootScope, $modal, $compile, $modalStack) {
     /**
      * Opens a modal
      * @param  {Object} scope      - an object to be merged with modal's scope
@@ -27,13 +38,48 @@ angular.module('ospApp')
 
       /* Confirmation modals */
       confirm: {
+        edit: function (cb) {
+          cb = cb || angular.noop;
 
+          return function () {
+            var args = Array.prototype.slice.call(arguments),
+                task = args[0],
+                editModal;
+
+            editModal = openModal({
+              modal: {
+                task: task,
+                dismissable: true,
+                title: 'Task Details',
+                html: $compile('<task-creator task-action="edit" task-to-edit="task"></task-creator>')(this),
+                buttons: [{
+                  classes: 'btn-primary',
+                  text: 'Update',
+                  click: function(e) {
+                    editModal.close(e);
+                  }
+                }, {
+                  classes: 'btn-warning',
+                  text: 'Cancel',
+                  click: function(e) {
+                    editModal.dismiss(e);
+                  }
+                }]
+              }
+            }, 'modal-info');
+
+            editModal.result.then(function(event) {
+              cb.apply(event, args);
+            });
+          }
+        },
         /**
          * Create a function to open a delete confirmation modal (ex. ng-click='myModalFn(name, arg1, arg2...)')
          * @param  {Function} del - callback, ran when delete is confirmed
          * @return {Function}     - the function to open the modal (ex. myModalFn)
          */
         delete: function(del) {
+          console.log(del)
           del = del || angular.noop;
 
           /**
@@ -72,6 +118,9 @@ angular.module('ospApp')
             });
           };
         }
+      },
+      close: function (reason) {
+        $modalStack.dismissAll(reason);
       }
     };
   });
