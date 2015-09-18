@@ -1,4 +1,14 @@
 angular.module('ospApp')
+  .factory('Tasks', ["$rootScope", "$resource", function ($rootScope, $resource) {
+    return {
+      task: $resource("/api/tasks/:id", {id: "@id"}, {
+        update: {method: "PUT"}
+      }),
+      complete: $resource('/api/tasks/:id', {id: "@id"}, {
+        markAsComplete: { method: "POST"}
+      })
+    }
+  }])
   .factory("Task", ["taskStorage", "$rootScope", "GeneratorID", "$q", function (taskStorage, $rootScope, GeneratorID, $q) {
     return {
       query: function(){
@@ -57,11 +67,9 @@ angular.module('ospApp')
     Storage.getAll = function () {
       return formArray(this.tasks)
     };
-
     Storage.getTask = function (id) {
       return Storage.tasks[id];
     };
-
     Storage.addTask = function (id, obj) {
       var deferred = $q.defer();
 

@@ -16,9 +16,9 @@ angular.module('ospApp')
       return filtered;
     }
   })
-  .directive("taskList", function (Task, Modal) {
+  .directive("taskList", function (Task, Modal, Tasks) {
     function taskListCtrl($scope) {
-      $scope.tasks = Task.query();
+      $scope.tasks = Tasks.task.query();
 
       $scope.filterBy = {
         active: true,
@@ -38,14 +38,18 @@ angular.module('ospApp')
             console.log(task);
             //$scope.tasks[id] = task
           });
+
+        Tasks.complete.markAsComplete({id: id}, {}, function (data) {
+          console.log('marked', data);
+        });
       };
 
       $scope.editTask = Modal.confirm.edit(function (task) {
-        $scope.$broadcast("task-edited")
+        $scope.$broadcast("task-edited", task)
       });
 
-      $scope.$on('task-added', function (e, tasks) {
-        $scope.tasks = tasks;
+      $scope.$on('task-added', function (e, task) {
+        $scope.tasks.push(task);
       });
     }
 
