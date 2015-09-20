@@ -45,7 +45,19 @@ exports.update = function (req, res) {
 
 // mark as complete
 exports.markAsComplete = function (req, res) {
+  if(req.body._id) { delete req.body._id; }
 
+  Task.findById(req.params.id, function(err, task){
+    if(err) { return handleError(res, err) }
+    if(!task) { return res.status(404).send('Task not found') }
+
+    task.completed = !task.completed;
+
+    task.save(function (err) {
+      if(err) { return handleError(res, err) }
+      return res.status(200).json(task);
+    });
+  })
 };
 
 

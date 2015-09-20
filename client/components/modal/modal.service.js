@@ -71,6 +71,10 @@ angular.module('ospApp')
             editModal.result.then(function(event) {
               cb.apply(event, args);
             });
+
+            editModal.result.finally(function() {
+              $rootScope.$broadcast('modal-closed');
+            });
           }
         },
         /**

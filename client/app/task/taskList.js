@@ -33,14 +33,17 @@ angular.module('ospApp')
       };
 
       $scope.markAsDone = function (id) {
-        Task.markAsComplete(id).
-          then(function (task) {
-            console.log(task);
-            //$scope.tasks[id] = task
+        console.log(id);
+        Tasks.complete.markAsComplete({id: id}, {}, function (updatedTask) {
+          console.log('marked', updatedTask);
+
+          angular.forEach($scope.tasks, function (task, i) {
+            if(task._id === updatedTask._id){
+              $scope.tasks[i] = updatedTask;
+              return ;
+            }
           });
 
-        Tasks.complete.markAsComplete({id: id}, {}, function (data) {
-          console.log('marked', data);
         });
       };
 
@@ -49,7 +52,18 @@ angular.module('ospApp')
       });
 
       $scope.$on('task-added', function (e, task) {
+        console.info('listen to task-added event')
         $scope.tasks.push(task);
+      });
+
+      $scope.$on('task-updated', function (e, updatedTask) {
+        console.info('listen to task-updated event')
+        angular.forEach($scope.tasks, function (task, i) {
+          if(task._id === updatedTask._id){
+            $scope.tasks[i] = updatedTask;
+            return ;
+          }
+        });
       });
     }
 

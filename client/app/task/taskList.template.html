@@ -43,7 +43,7 @@
         <td>{{task.priority}}</td>
         <td>{{task.endDate | date: 'dd-MMMM-yyyy'}}</td>
         <td>
-          <input type="checkbox" ng-checked="task.completed" ng-click="markAsDone(task.id)">
+          <input type="checkbox" ng-checked="task.completed" ng-click="markAsDone(task._id)">
         </td>
       </tr>
       </tbody>
