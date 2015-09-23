@@ -2,6 +2,6 @@
 
 angular.module('ospApp')
 
-  .controller('MainCtrl', ['$scope', 'taskStorage', function ($scope, taskStorage) {
+  .controller('MainCtrl', ['$scope', function ($scope) {
 
   }]);

@@ -16,7 +16,7 @@ angular.module('ospApp')
       return filtered;
     }
   })
-  .directive("taskList", function (Task, Modal, Tasks) {
+  .directive("taskList", function (Modal, Tasks) {
     function taskListCtrl($scope) {
       $scope.tasks = Tasks.task.query();
 
@@ -27,23 +27,23 @@ angular.module('ospApp')
 
       $scope.predicate = "summary";
 
+      function findAndReplace (updatedTask, task, i) {
+        if(task._id === updatedTask._id){
+          $scope.tasks[i] = updatedTask;
+          return ;
+        }
+      }
+
       $scope.order = function (predicate) {
         $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
         $scope.predicate = predicate;
       };
 
       $scope.markAsDone = function (id) {
-        console.log(id);
         Tasks.complete.markAsComplete({id: id}, {}, function (updatedTask) {
-          console.log('marked', updatedTask);
-
           angular.forEach($scope.tasks, function (task, i) {
-            if(task._id === updatedTask._id){
-              $scope.tasks[i] = updatedTask;
-              return ;
-            }
+            findAndReplace(updatedTask, task, i);
           });
-
         });
       };
 
@@ -52,17 +52,12 @@ angular.module('ospApp')
       });
 
       $scope.$on('task-added', function (e, task) {
-        console.info('listen to task-added event')
         $scope.tasks.push(task);
       });
 
       $scope.$on('task-updated', function (e, updatedTask) {
-        console.info('listen to task-updated event')
         angular.forEach($scope.tasks, function (task, i) {
-          if(task._id === updatedTask._id){
-            $scope.tasks[i] = updatedTask;
-            return ;
-          }
+          findAndReplace(updatedTask, task, i);
         });
       });
     }

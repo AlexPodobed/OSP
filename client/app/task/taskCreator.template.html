@@ -1,12 +1,13 @@
-<form ng-submit="addNewTask()">
+<form name="taskForm" ng-submit="addNewTask()" novalidate>
   <div class="row">
+    <!-- task summary-->
     <div ng-class="{'col-md-6': action==='new','col-md-12': action==='edit'}">
       <div class="form-group">
         <label for="">Task:</label>
-        <input type="text" class="form-control" ng-model="newTask.summary">
+        <input type="text" name="summary" required="" class="form-control" ng-model="newTask.summary">
       </div>
     </div>
-
+    <!--task priority-->
     <div ng-class="{'col-md-2': action==='new','col-md-12': action==='edit'}">
       <div class="form-group">
         <label for="">Priority:</label>
@@ -17,14 +18,14 @@
         </select>
       </div>
     </div>
-
+    <!-- task end date-->
     <div class="end-date-datepicker" ng-class="{'col-md-3': action==='new','col-md-12': action==='edit'}">
       <div class="form-group">
         <label for="">End Date:</label>
         <osp-datepicker end-date="newTask.endDate"></osp-datepicker>
       </div>
     </div>
-
+    <!-- task description-->
     <div class="col-md-12" ng-if="action==='edit'">
       <input type="submit" hidden>
       <div class="form-group">
@@ -35,10 +36,10 @@
         </textarea>
       </div>
     </div>
-
+    <!-- add button-->
     <div class="col-md-1" ng-if="action==='new'">
       <label for="">Btn:</label>
-      <button type="submit" class="btn btn-default" >
+      <button type="submit" class="btn btn-default" ng-disabled="taskForm.$invalid">
         <span class="glyphicon glyphicon-plus"></span>
       </button>
     </div>
