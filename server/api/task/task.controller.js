@@ -5,6 +5,7 @@ var Task = require('./task.model');
 
 // list all of tasks
 exports.index = function (req, res) {
+  console.log(req.payload);
   Task.find(function (err, tasks) {
     if(err) { return handleError(res, err)}
 
@@ -13,6 +14,7 @@ exports.index = function (req, res) {
 };
 // get single task
 exports.show = function (req, res) {
+  console.log(req.payload);
   Task.findById(req.params.id, function (err, task) {
     if(err) { return handleError(res, err) }
     if(!task) { return res.status(404).send('Task not found') }
