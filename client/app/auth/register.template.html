@@ -4,11 +4,12 @@
 
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-      <form>
+      <form name="registerForm" novalidate>
         <div class="form-group">
           <label for="username">Name:</label>
           <input type="text" class="form-control"
                  ng-model="user.name"
+                 required=""
                  id="username"
                  placeholder="Name">
         </div>
@@ -16,18 +17,23 @@
           <label for="password">Password:</label>
           <input type="password" class="form-control"
                  ng-model="user.password"
+                 required=""
                  id="password"
                  placeholder="Password">
         </div>
         <div class="form-group">
           <input type="password"
                  ng-model="user.passwordConfirm"
+                 required=""
                  class="form-control"
                  placeholder="Confirm password">
         </div>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit"
+                ng-disabled="registerForm.$invalid  || (!((!!user.password && !!user.passwordConfirm)&&(user.password == user.passwordConfirm)))"
+                class="btn btn-default">Submit</button>
       </form>
     </div>
   </div>
+
 </div>
