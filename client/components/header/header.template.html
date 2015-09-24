@@ -11,8 +11,16 @@
     </div>
     <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
-        <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
-          <a ng-href="{{item.link}}">{{item.title}}</a>
+
+
+        <li ui-sref-active="active">
+          <a href="" ui-sref="main">Home</a>
+        </li>
+        <li ui-sref-active="active">
+          <a href="" ui-sref="login">Login</a>
+        </li>
+        <li ui-sref-active="active">
+          <a href="" ui-sref="register">Register</a>
         </li>
       </ul>
     </div>
