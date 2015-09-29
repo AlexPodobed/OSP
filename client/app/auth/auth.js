@@ -6,11 +6,17 @@ angular.module('ospApp')
       .state('login', {
         url: '/login',
         templateUrl: 'app/auth/login.template.html',
-        controller: 'AuthCtrl'
+        controller: 'AuthCtrl',
+        data: {
+          isPublic: true
+        }
       })
       .state('register', {
         url: '/register',
         templateUrl: 'app/auth/register.template.html',
-        controller: 'AuthCtrl'
+        controller: 'AuthCtrl',
+        data: {
+          isPublic: true
+        }
       });
   });

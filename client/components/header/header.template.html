@@ -13,14 +13,24 @@
       <ul class="nav navbar-nav">
 
 
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" ng-if="isLoggedIn">
           <a href="" ui-sref="main">Home</a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" ng-if="!isLoggedIn">
           <a href="" ui-sref="login">Login</a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" ng-if="!isLoggedIn">
           <a href="" ui-sref="register">Register</a>
+        </li>
+
+      </ul>
+
+      <ul class="nav navbar-nav pull-right" ng-if="isLoggedIn">
+        <li class="">
+          <a href="">{{user}}</a>
+        </li>
+        <li class="" ng-click="logOut()">
+          <a href="">Logout</a>
         </li>
       </ul>
     </div>

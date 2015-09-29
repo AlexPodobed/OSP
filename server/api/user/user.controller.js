@@ -18,7 +18,7 @@ exports.register = function (req, res, next) {
 };
 
 exports.login = function(req, res, next){
-  console.log(req.body)
+  console.log("LOGIN:",req.body)
   if(!req.body.username || !req.body.password){
     return res.status(400).json({message: "Please, fill out all fields"});
   }

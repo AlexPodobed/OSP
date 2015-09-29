@@ -6,6 +6,9 @@ angular.module('ospApp')
       .state('main', {
         url: '/home',
         templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        data: {
+          isPublic: false
+        }
       });
   });
