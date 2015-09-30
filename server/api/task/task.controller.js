@@ -2,13 +2,13 @@
 
 var _ = require('lodash');
 var Task = require('./task.model');
+var User = require('../user/user.model');
+
 
 // list all of tasks
 exports.index = function (req, res) {
-  console.log(req.payload);
-  Task.find(function (err, tasks) {
+  Task.find({_creator: req.payload._id},function (err, tasks) {
     if(err) { return handleError(res, err)}
-
     return res.status(200).json(tasks);
   });
 };
@@ -23,7 +23,9 @@ exports.show = function (req, res) {
 };
 // create new task
 exports.create = function (req, res) {
-  Task.create(req.body, function (err, task) {
+  var newTask = req.body;
+  newTask._creator = req.payload._id;
+  Task.create(newTask, function (err, task) {
     if(err) { return handleError(res, err) }
     return res.status(201).json(task);
   });
@@ -33,14 +35,15 @@ exports.create = function (req, res) {
 exports.update = function (req, res) {
   if(req.body._id) { delete req.body._id; }
 
-  Task.findById(req.params.id, function (err, task) {
+  Task.findOne({_id: req.params.id, _creator: req.payload._id}, function (err, task) {
     if(err) { return handleError(res, err) }
     if(!task) { return res.status(404).send('Task not found') }
 
     var updated = _.merge(task, req.body);
+
     updated.save(function (err) {
       if(err) { return handleError(res, err) }
-      return res.status(200).json(task);
+      return res.status(200).json(task[0]);
     });
   });
 };
@@ -49,7 +52,7 @@ exports.update = function (req, res) {
 exports.markAsComplete = function (req, res) {
   if(req.body._id) { delete req.body._id; }
 
-  Task.findById(req.params.id, function(err, task){
+  Task.findOne({_id: req.params.id, _creator: req.payload._id}, function(err, task){
     if(err) { return handleError(res, err) }
     if(!task) { return res.status(404).send('Task not found') }
 

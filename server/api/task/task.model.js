@@ -8,7 +8,11 @@ var TaskSchema = new Schema({
   description: String,
   priority: String,
   completed: Boolean,
-  endDate: String
+  endDate: String,
+  _creator: {
+    type: Schema.Types.ObjectId,
+    ref: "User_Model"
+  }
 });
 
 module.exports = mongoose.model('Task_Model', TaskSchema);

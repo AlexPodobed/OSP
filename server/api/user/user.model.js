@@ -12,7 +12,11 @@ var UserSchema = new Schema({
     unique: true
   },
   hash: String,
-  salt: String
+  salt: String,
+  tasks: [{
+    type: Schema.Types.ObjectId,
+    ref: "Task_Model"
+  }]
 });
 
 UserSchema.methods.setPassword = function (password) {
