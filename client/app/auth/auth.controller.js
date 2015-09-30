@@ -20,5 +20,18 @@ angular.module('ospApp')
       }, function(){
         console.log('error');
       });
-    }
+    };
+
+    $scope.register = function () {
+      var user = {
+        username: $scope.user.name,
+        password: $scope.user.password
+      };
+      Auth.register(user).then(function () {
+        $state.go('main');
+      }, function () {
+        console.log('error');
+      })
+    };
+
   }]);

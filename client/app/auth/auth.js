@@ -9,7 +9,12 @@ angular.module('ospApp')
         controller: 'AuthCtrl',
         data: {
           isPublic: true
-        }
+        },
+        onEnter: ['Auth', '$state', function(Auth, $state){
+          if(Auth.isLoggedIn()){
+            $state.go('main');
+          }
+        }]
       })
       .state('register', {
         url: '/register',
@@ -17,6 +22,11 @@ angular.module('ospApp')
         controller: 'AuthCtrl',
         data: {
           isPublic: true
-        }
+        },
+        onEnter: ['Auth', '$state', function(Auth, $state){
+          if(Auth.isLoggedIn()){
+            $state.go('main');
+          }
+        }]
       });
   });
