@@ -2,12 +2,12 @@
 
 angular.module('ospApp')
 
-  .controller('AuthCtrl', ['$scope', '$state', 'Auth', function ($scope, $state, Auth) {
+  .controller('AuthCtrl', ['$scope', '$state', 'Auth', 'toaster', function ($scope, $state, Auth, toaster) {
     $scope.user = {};
-    console.log('AuthCtrl');
+    $scope.error = "";
 
-    console.log(Auth.getToken())
 
+    toaster.pop('success', 'its working');
     $scope.login = function () {
       console.log($scope.user)
       var user = {
@@ -17,8 +17,9 @@ angular.module('ospApp')
       Auth.login(user).then(function () {
         console.log('success');
         $state.go('main');
-      }, function(){
-        console.log('error');
+      }, function(err){
+        console.log(err)
+        $scope.error = err.data.message;
       });
     };
 

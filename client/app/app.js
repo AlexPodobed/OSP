@@ -6,7 +6,9 @@ angular.module('ospApp', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
-  'ngStorage'
+  'ngStorage',
+  'toaster',
+  'ngAnimate'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

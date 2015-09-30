@@ -22,7 +22,7 @@ exports.login = function(req, res, next){
   if(!req.body.username || !req.body.password){
     return res.status(400).json({message: "Please, fill out all fields"});
   }
-  passport.authenticate('local', {failureFlash: true}, function (err, user, info) {
+  passport.authenticate('local', function (err, user, info) {
     if(err) return next(err);
     if(user){
       return res.status(200).json({ token: user.generateJWT()})
