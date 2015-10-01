@@ -7,7 +7,7 @@ angular.module('ospApp')
     $scope.error = "";
 
 
-    toaster.pop('success', 'its working');
+
     $scope.login = function () {
       console.log($scope.user)
       var user = {
@@ -17,9 +17,11 @@ angular.module('ospApp')
       Auth.login(user).then(function () {
         console.log('success');
         $state.go('main');
+        toaster.success('Successfully logged in', 'Welcome ' + $scope.user.name);
       }, function(err){
         console.log(err)
         $scope.error = err.data.message;
+        toaster.error('Incorrect credentials', 'Error: ' + err.data.message);
       });
     };
 
@@ -30,8 +32,10 @@ angular.module('ospApp')
       };
       Auth.register(user).then(function () {
         $state.go('main');
-      }, function () {
-        console.log('error');
+        toaster.success('Successfully registered', 'Welcome ' + $scope.user.name);
+      }, function (err) {
+        $scope.error = err.data.message;
+        toaster.error('Oops!', 'Error: ' + err.data.message);
       })
     };
 
