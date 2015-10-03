@@ -16,7 +16,7 @@ angular.module('ospApp')
       return filtered;
     }
   })
-  .directive("taskList", function (Modal, Tasks) {
+  .directive("taskList", function (Modal, Tasks,toaster) {
     function taskListCtrl($scope) {
       $scope.tasks = Tasks.task.query();
 
@@ -44,6 +44,7 @@ angular.module('ospApp')
           angular.forEach($scope.tasks, function (task, i) {
             findAndReplace(updatedTask, task, i);
           });
+          toaster.success('Task: '+ updatedTask.summary, "Successfully marked as " + (updatedTask.completed ? 'done' : 'undone'))
         });
       };
 

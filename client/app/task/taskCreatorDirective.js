@@ -6,7 +6,9 @@ angular.module('ospApp')
 
       function getTomorrowDate(){
         var tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
+        var currentDay = tomorrow.getDay();
+        var plusDays = (currentDay === 5) ? 3 : (currentDay === 6) ? 2 : 1;
+        tomorrow.setDate(tomorrow.getDate() + plusDays);
         return tomorrow;
       }
       function initializeNewTask(){
