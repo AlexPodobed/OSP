@@ -1,5 +1,5 @@
 angular.module('ospApp')
-  .directive("taskCreator", function (Modal, Tasks, $rootScope) {
+  .directive("taskCreator", function (Modal, Tasks, $rootScope, toaster) {
 
     function taskCreatorCtrl($scope) {
       $scope.taskOld = angular.copy($scope.task, {});
@@ -37,10 +37,12 @@ angular.module('ospApp')
           Tasks.task.update({id: $scope.newTask._id}, $scope.newTask, function (task) {
             Modal.close();
             $rootScope.$broadcast('task-updated', task);
+            toaster.success('Task: ' +task.summary, 'Successfully updated');
           });
         } else {
           Tasks.task.save($scope.newTask, function (task) {
             $rootScope.$broadcast("task-added", task);
+            toaster.success('Task: ' + task.summary, 'Successfully added');
             $scope.newTask = initializeNewTask();
           });
         }
