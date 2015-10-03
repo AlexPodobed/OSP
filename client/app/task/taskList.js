@@ -69,4 +69,4 @@ angular.module('ospApp')
       scope: {},
       controller: taskListCtrl
     }
-  });
+  }); 
