@@ -13,7 +13,6 @@ angular.module('ospApp', [
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
       .otherwise('/home');
-    //$stateProvider.state("otherwise", { url : '*path'});
     $locationProvider.html5Mode(true);
 
     $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
